@@ -1,0 +1,15 @@
+Dataset: early_diabetes
+Best model: Random Forest
+
+              precision    recall  f1-score   support
+
+           0       0.83      0.94      0.88        16
+           1       0.97      0.91      0.94        35
+
+    accuracy                           0.92        51
+   macro avg       0.90      0.93      0.91        51
+weighted avg       0.93      0.92      0.92        51
+
+Confusion Matrix:
+[[15  1]
+ [ 3 32]]

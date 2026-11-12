@@ -1,0 +1,15 @@
+Dataset: pima
+Best model: SVM
+
+              precision    recall  f1-score   support
+
+           0       0.83      0.73      0.78       100
+           1       0.59      0.72      0.65        54
+
+    accuracy                           0.73       154
+   macro avg       0.71      0.73      0.71       154
+weighted avg       0.75      0.73      0.73       154
+
+Confusion Matrix:
+[[73 27]
+ [15 39]]
