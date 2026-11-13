@@ -16,21 +16,34 @@ PRIMARY_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 FALLBACK_MODEL = os.getenv("GEMINI_FALLBACK_MODEL", "gemini-3.5-flash-lite")
 
 
+
 def get_gemini_client():
-    """Create a Gemini client with a finite request timeout."""
+    """Create a Gemini client using local or Streamlit Cloud secrets."""
+
+    # First, check the local .env file
     api_key = os.getenv("GEMINI_API_KEY")
+
+    # If not found, check Streamlit Cloud secrets
+    if not api_key:
+        try:
+            import streamlit as st
+            api_key = st.secrets.get("GEMINI_API_KEY")
+        except Exception:
+            api_key = None
+
+    # Stop if the API key is missing
     if not api_key:
         raise RuntimeError(
-            "Gemini API key not found. Add GEMINI_API_KEY=your_key to the .env "
-            "file in the main Diabetes_GenAI_Capstone folder, then restart Streamlit."
+            "Gemini API key not found. Configure GEMINI_API_KEY "
+            "in your .env file or Streamlit secrets."
         )
 
-    # Timeout is in milliseconds. This prevents the Streamlit spinner from
-    # waiting indefinitely if the API connection stalls.
+    # Create Gemini client
     return genai.Client(
         api_key=api_key,
         http_options=types.HttpOptions(timeout=30000),
     )
+
 
 
 def generate_patient_explanation(dataset_name, patient_inputs, prediction_result):
